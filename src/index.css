@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  
+  font-family: "NotoSansCustom";
+  src: url("./assets/fonts/NotoSans-Regular.ttf") format("truetype");
+  background: #0b0b0b;
+  color: #ffffff;
+  padding-top: 50px;
+}
+
+:root {
+  /* 🎨 Primary Colors */
+  --bg-dark: #050505;
+  --card-bg: rgba(18, 18, 23, 0.7);
+  --accent-lavender: #a78bfa;
+  --accent-glow: rgba(167, 139, 250, 0.15);
+  --text-main: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.5);
+  
+  /* ✨ Effects */
+  --glass-blur: blur(25px);
+  --premium-border: 1px solid rgba(255, 255, 255, 0.1);
+  --shadow-deep: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+ 

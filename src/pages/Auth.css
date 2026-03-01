@@ -1,0 +1,238 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap');
+
+.auth-page {
+    /* height: 100vh; */
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+    perspective: 1000px; /* 3D effect ke liye zaroori */
+    overflow: hidden;
+    background: #000;
+  
+    min-height: 100dvh; /* Mobile browser friendly height */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Saari sides se gap taaki card chipke na */
+    background: #000;
+    position: relative;
+    overflow-y: auto; /* Agar screen choti ho toh scroll ho sake */
+
+}
+
+/* Background with Animated Blur */
+.auth-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('/bg-image.jpg') no-repeat center center/cover;
+    filter: brightness(0.3) blur(15px);
+    z-index: 1;
+    animation: slowZoom 20s infinite alternate;
+    
+}
+
+/* 💎 THE CARD: PRODUCTION QUALITY */
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 60px 45px;
+    background: rgba(15, 15, 20, 0.75);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    z-index: 10;
+    text-align: center;
+    animation: slideUpFade 1s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    transform-style: preserve-3d; /* Isse card 3D mein ghumega */
+    transition: transform 0.1s ease-out; /* Mouse movement ko smooth banata hai */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5), 
+                0 0 50px rgba(167, 139, 250, 0.1); /* Subtle Glow */
+
+}
+
+.auth-card:hover {
+    border-color: rgba(167, 139, 250, 0.5);
+    box-shadow: 0 50px 150px rgba(0, 0, 0, 0.8), 
+                0 0 80px rgba(167, 139, 250, 0.2);
+}
+
+/* Header Spacing */
+.auth-header { margin-bottom: 40px; }
+
+.brand-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    margin-bottom: 20px;
+}
+
+.main-logo {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #fff;
+    margin-bottom: 10px;
+    background: linear-gradient(120deg, #ffffff 30%, #a78bfa 50%, #ffffff 70%);
+    background-size: 200% auto;
+    
+    background-clip: text; /* Modern standard */
+    -webkit-background-clip: text; /* Safari/Chrome support */
+    
+    color: transparent; /* Fallback for modern browsers */
+    -webkit-text-fill-color: transparent; /* Safari/Chrome support */
+    
+    animation: shine 5s linear infinite;
+}
+
+.sub-tagline {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* 🖋️ FORM SPACING */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Spacing between inputs */
+    margin-bottom: 24px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 18px 22px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.auth-card input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #a78bfa;
+    transform: translateY(-2px);
+}
+
+/* 🚀 BUTTON: POWERFUL BUT CLEAN */
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: #a78bfa;
+    color: #000;
+    border: none;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #7c3aed; /* Duolingo 3D */
+    transition: all 0.2s;
+}
+
+.submit-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #7c3aed;
+}
+
+/* Divider */
+.auth-divider {
+    margin: 35px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.auth-divider span {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #15151a;
+    padding: 0 15px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Footer & Message */
+.switch { color: rgba(255, 255, 255, 0.5); font-size: 14px; margin-top: 30px; }
+.switch span { color: #a78bfa; font-weight: 700; cursor: pointer; margin-left: 6px; }
+
+.msg-bubble {
+    margin-top: 20px;
+    padding: 12px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* 🎬 ANIMATIONS */
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slowZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+/* Responsive Mobile */
+/* 📱 Responsive Mobile - Professional Polish */
+@media (max-width: 500px) {
+    .auth-page {
+        perspective: none; /* Mobile par 3D effect band kar dena chahiye */
+        padding: 15px;
+    }
+
+    .auth-card {
+        padding: 40px 24px; /* Padding kam ki taaki buttons bade dikhein */
+        max-width: 100%;
+        border-radius: 32px;
+        transform: none !important; /* Touch par card hilega nahi */
+        backdrop-filter: blur(20px); /* Mobile performance ke liye blur thoda kam */
+    }
+
+    .main-logo {
+        font-size: 1.8rem; /* Mobile par text thoda chota taaki ek line mein aaye */
+        letter-spacing: -1px;
+    }
+
+    .brand-badge {
+        font-size: 10px;
+        padding: 4px 12px;
+    }
+
+    .auth-card input {
+        padding: 16px 20px; /* Mobile inputs accessible hone chahiye */
+        font-size: 16px; /* 16px se kam hone par iOS zoom kar deta hai automatically */
+    }
+
+    .submit-btn {
+        padding: 16px;
+        font-size: 15px;
+    }
+}
