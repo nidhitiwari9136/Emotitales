@@ -42,8 +42,8 @@ function Auth() {
     }
 
     const url = isLogin
-      ? "http://127.0.0.1:8000/api/login/"
-      : "http://127.0.0.1:8000/api/register/";
+      ? "https://emotitales-backend.onrender.com/api/login/"
+      : "https://emotitales-backend.onrender.com/api/register/";
 
     try {
       const res = await axios.post(url, { username, password });
@@ -65,8 +65,8 @@ function Auth() {
 
   return (
     <div className="auth-page" onMouseMove={handleMouseMove}>
-      <div 
-        className="auth-card" 
+      <div
+        className="auth-card"
         style={{ transform: `rotateY(${xy.x}deg) rotateX(${xy.y}deg)` }}
       >
         {/* Header Section */}
@@ -115,7 +115,8 @@ function Auth() {
         <div className="social-login">
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
-              const res = await axios.post("http://127.0.0.1:8000/api/google-login/", {
+              // Isse replace karo:
+              const res = await axios.post("https://emotitales-backend.onrender.com/api/google-login/", {
                 token: credentialResponse.credential
               });
               if (res.data.message) {
