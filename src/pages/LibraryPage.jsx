@@ -3,7 +3,7 @@ import axios from "axios";
 import LibraryGrid from "../components/LibraryGrid";
 import "../components/Library.css";
 
-const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = "https://emotitales-backend.onrender.com/api";
 
 const LibraryPage = () => {
 

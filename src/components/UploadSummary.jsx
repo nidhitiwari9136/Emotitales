@@ -29,7 +29,7 @@ const UploadSummary = () => {
       setAudioUrl("");
 
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/summary/",
+        "https://emotitales-backend.onrender.com/api/summary/",
         formData
       );
 

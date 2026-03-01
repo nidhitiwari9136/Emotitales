@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./StoryGenerator.css";
 
-const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = "https://emotitales-backend.onrender.com/api";
 
 const StoryGenerator = () => {
 
