@@ -13,7 +13,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://127.0.0.1:8000/api/logout/");
+      await axios.get("https://emotitales-backend.onrender.com/api/logout/");
     } catch {}
     localStorage.removeItem("user");
     navigate("/login");

@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 60px;
+  padding: 0 50px;
 
   background: rgba(10, 15, 30, 0.75);
   backdrop-filter: blur(25px);
@@ -111,7 +111,7 @@
   width: 28px;
   height: 3px;
   background: white;
-  border-radius: 5px;
+  border-radius: 3px;
   transition: 0.4s ease;
 }
 

@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
@@ -23,9 +24,9 @@ function Home() {
             </p>
 
             <div className="hero-cta">
-              <a href="/summary" className="btn-primary">Start Summarizing</a>
-              <a href="/story" className="btn-secondary">Generate Story</a>
-              <a href="library/" className="btn-third">Explore Library</a>
+              <Link to="/summary" className="btn-primary">Start Summarizing</Link>
+              <Link to="/story" className="btn-secondary">Generate Story</Link>
+              <Link to="/library" className="btn-third">Explore Library</Link>
             </div>
           </div>
         </section>
