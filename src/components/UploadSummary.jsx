@@ -35,15 +35,19 @@ const UploadSummary = () => {
 
       setSummary(res.data.summary || "");
 
-      if (res.data.audio) setAudioUrl(res.data.audio);
-
+      if (res.data.audio) {
+        // FIX: Backend URL + Audio Path ko joda taaki full rasta mile
+        const fullAudioUrl = `https://emotitales-backend.onrender.com${res.data.audio}`;
+        console.log("Full Audio URL:", fullAudioUrl); 
+        setAudioUrl(fullAudioUrl);
+      }
     } catch (err) {
       console.error(err);
-      alert("Error generating summary");
+      alert("Error generating summary. Backend check karo!");
     } finally {
       setLoading(false);
     }
-  };
+  }; // <--- Ye bracket zaroori tha
 
   return (
     <div className="summary-page">
@@ -54,54 +58,36 @@ const UploadSummary = () => {
         </p>
 
         <form onSubmit={handleSubmit} className="upload-form">
-
-          {/* TEXT INPUT */}
           <textarea
             placeholder="✍️ Paste or type text here (optional)"
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
           />
 
-          <div className="divider">
-            <span>OR</span>
-          </div>
+          <div className="divider"><span>OR</span></div>
 
-          {/* FILE INPUT */}
           <label className="custom-file-upload">
-  📁 Choose PDF 
-  <input
-    type="file"
-    accept=".pdf,.png,.jpg,.jpeg"
-    onChange={(e) => {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
-    }}
-  />
-</label>
+            📁 Choose PDF 
+            <input
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </label>
 
-{file && (
-  <div className="file-name">
-    ✅ {file.name}
-  </div>
-)}
+          {file && <div className="file-name">✅ {file.name}</div>}
 
-
-          {/* MODE BUTTONS */}
           <div className="mode-buttons">
             <button
               type="button"
               className={mode === "text" ? "active" : ""}
               onClick={() => setMode("text")}
-            >
-              📝 Text
-            </button>
+            >📝 Text</button>
             <button
               type="button"
               className={mode === "audio" ? "active" : ""}
               onClick={() => setMode("audio")}
-            >
-              🔊 Audio
-            </button>
+            >🔊 Audio</button>
           </div>
 
           <button type="submit" disabled={loading} className="generate-btn">
@@ -109,7 +95,6 @@ const UploadSummary = () => {
           </button>
         </form>
 
-        {/* OUTPUTS */}
         {summary && (
           <div className="output-box">
             <h3>📝 Summary</h3>
@@ -120,10 +105,17 @@ const UploadSummary = () => {
         {audioUrl && (
           <div className="audio-box">
             <h3>🔊 Audio Summary</h3>
-            <audio controls src={audioUrl}></audio>
+            {/* key={audioUrl} har baar naya player load karega */}
+            <audio key={audioUrl} controls autoPlay>
+              <source src={audioUrl} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+            <br />
+            <a href={audioUrl} target="_blank" rel="noreferrer" style={{color: '#4cc9f0', fontSize: '12px'}}>
+              🔗 Link pe click karke check karo agar player nahi baj raha
+            </a>
           </div>
         )}
-
       </div>
     </div>
   );
