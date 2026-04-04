@@ -111,7 +111,7 @@ const UploadSummary = () => {
             </audio>
             <br />
             <a href={audioUrl} target="_blank" rel="noreferrer" style={{ color: '#4cc9f0', fontSize: '12px' }}>
-              🔗 Link pe click karke check karo agar player nahi baj raha
+              
             </a>
           </div>
         )}
