@@ -42,8 +42,8 @@ function Auth() {
     }
 
     const url = isLogin
-      ? "https://emotitales-backend.onrender.com/api/login/"
-      : "https://emotitales-backend.onrender.com/api/register/";
+      ? "http://127.0.0.1:8000/api/login/"
+      : "http://127.0.0.1:8000/api/register/";
 
     try {
       const res = await axios.post(url, { username, password });
@@ -125,7 +125,7 @@ function Auth() {
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
               try {
-                const res = await axios.post("https://emotitales-backend.onrender.com/api/google-login/", {
+                const res = await axios.post("http://127.0.0.1:8000/api/google-login/", {
                   token: credentialResponse.credential
                 });
                 if (res.data.message || res.status === 200) {

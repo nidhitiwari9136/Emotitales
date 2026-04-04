@@ -29,17 +29,16 @@ const UploadSummary = () => {
       setAudioUrl("");
 
       const res = await axios.post(
-        "https://emotitales-backend.onrender.com/api/summary/",
+        "http://127.0.0.1:8000/api/summary/",
         formData
       );
 
       setSummary(res.data.summary || "");
 
       if (res.data.audio) {
-        // FIX: Backend URL + Audio Path ko joda taaki full rasta mile
-        const fullAudioUrl = `https://emotitales-backend.onrender.com${res.data.audio}`;
-        console.log("Full Audio URL:", fullAudioUrl); 
-        setAudioUrl(fullAudioUrl);
+        const fullUrl = "http://127.0.0.1:8000" + res.data.audio;
+        setAudioUrl(fullUrl);
+        console.log("Audio URL:", fullUrl);
       }
     } catch (err) {
       console.error(err);
@@ -67,7 +66,7 @@ const UploadSummary = () => {
           <div className="divider"><span>OR</span></div>
 
           <label className="custom-file-upload">
-            📁 Choose PDF 
+            📁 Choose PDF
             <input
               type="file"
               accept=".pdf,.png,.jpg,.jpeg"
@@ -111,7 +110,7 @@ const UploadSummary = () => {
               Your browser does not support the audio element.
             </audio>
             <br />
-            <a href={audioUrl} target="_blank" rel="noreferrer" style={{color: '#4cc9f0', fontSize: '12px'}}>
+            <a href={audioUrl} target="_blank" rel="noreferrer" style={{ color: '#4cc9f0', fontSize: '12px' }}>
               🔗 Link pe click karke check karo agar player nahi baj raha
             </a>
           </div>

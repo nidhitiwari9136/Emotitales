@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Base URL of Django backend
 const API = axios.create({
-  baseURL: "https://emotitales-backend.onrender.com/api/",
+  baseURL: "http://127.0.0.1:8000/api/",
 });
 
 
