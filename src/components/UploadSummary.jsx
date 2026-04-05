@@ -51,7 +51,7 @@ const UploadSummary = () => {
   return (
     <div className="summary-page">
       <div className="summary-card">
-        <h2>🤖 EmotiTales AI Summary</h2>
+        <h2> <span className="emoji">🤖</span> EmotiTales AI Summary</h2>
         <p className="subtitle">
           Upload PDF or enter text to get AI-powered summaries
         </p>

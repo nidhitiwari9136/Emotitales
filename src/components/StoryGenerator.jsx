@@ -83,207 +83,207 @@ const StoryGenerator = () => {
   };
   // ================= TRANSLATE =================
   const handleLanguageChange = async (lang) => {
-  setLanguage(lang);
+    setLanguage(lang);
 
-  if (!story) return;
+    if (!story) return;
 
-  try {
-    let res;
+    try {
+      let res;
 
-    if (currentStoryId !== null) {
-      // Library story
-      res = await axios.post(`${API_URL}/open-story/`, {
-        story_id: currentStoryId,
-        language: lang
+      if (currentStoryId !== null) {
+        // Library story
+        res = await axios.post(`${API_URL}/open-story/`, {
+          story_id: currentStoryId,
+          language: lang
+        });
+
+      } else if (originalStory) {
+        // 🔥 ONLY TRANSLATE (NO RE-GENERATE)
+        res = await axios.post(`${API_URL}/translate/`, {
+          text: originalStory,
+          language: lang
+        });
+      }
+
+      if (res && res.data?.story) {
+        setStory(res.data.story);
+      }
+
+    } catch (err) {
+      console.log("Translate error:", err);
+    }
+  };
+  const generateAudio = async () => {
+    if (!story) return;
+
+    setAudioLoading(true);
+
+    try {
+      const res = await axios.post(`${API_URL}/audio/`, {
+        story: story
       });
 
-    } else if (originalStory) {
-      // 🔥 ONLY TRANSLATE (NO RE-GENERATE)
-      res = await axios.post(`${API_URL}/translate/`, {
-        text: originalStory,
-        language: lang
-      });
+      setAudioUrl(res.data.audio + "?t=" + Date.now());
+
+    } catch (err) {
+      console.log("Audio error:", err);
+    } finally {
+      setAudioLoading(false);
     }
+  };
 
-    if (res && res.data?.story) {
-      setStory(res.data.story);
-    }
+  return (
+    <div className="story-container">
 
-  } catch (err) {
-    console.log("Translate error:", err);
-  }
-};
-const generateAudio = async () => {
-  if (!story) return;
+      {/* HERO */}
+      <div className="hero-card">
+        <h1>Create Emotional AI Stories</h1>
 
-  setAudioLoading(true);
+        <textarea
+          placeholder="Example: Mahatma Gandhi story for kids..."
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+        />
 
-  try {
-    const res = await axios.post(`${API_URL}/audio/`, {
-      story: story
-    });
+        <div className="controls">
 
-    setAudioUrl(res.data.audio + "?t=" + Date.now());
+          <select value={language} onChange={(e) => handleLanguageChange(e.target.value)}>
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Marathi</option>
+            <option>Gujarati</option>
+            <option>Tamil</option>
+            <option>Telugu</option>
+            <option>Bengali</option>
+            <option>Punjabi</option>
+            <option>Hinglish</option>
 
-  } catch (err) {
-    console.log("Audio error:", err);
-  } finally {
-    setAudioLoading(false);
-  }
-};
+          </select>
 
-return (
-  <div className="story-container">
-
-    {/* HERO */}
-    <div className="hero-card">
-      <h1>Create Emotional AI Stories</h1>
-
-      <textarea
-        placeholder="Example: Mahatma Gandhi story for kids..."
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-      />
-
-      <div className="controls">
-
-        <select value={language} onChange={(e) => handleLanguageChange(e.target.value)}>
-          <option>English</option>
-          <option>Hindi</option>
-          <option>Marathi</option>
-          <option>Gujarati</option>
-          <option>Tamil</option>
-          <option>Telugu</option>
-          <option>Bengali</option>
-          <option>Punjabi</option>
-          <option>Hinglish</option>
-
-        </select>
-
-        <select value={emotion} onChange={(e) => setEmotion(e.target.value)}>
-          <option value="happy">Happy</option>
-          <option value="sad">Sad</option>
-          <option value="funny">Funny</option>
-        </select>
-
-      </div>
-      <div className="length-buttons">
-        <button
-          className={length === "short" ? "active" : ""}
-          onClick={() => setLength("short")}
-        >
-          Short
-        </button>
-
-        <button
-          className={length === "medium" ? "active" : ""}
-          onClick={() => setLength("medium")}
-        >
-          Medium
-        </button>
-
-        <button
-          className={length === "long" ? "active" : ""}
-          onClick={() => setLength("long")}
-        >
-          Long
-        </button>
-      </div>
-
-      <button className="generate-btn" onClick={handleGenerate}>
-        {loading ? "Generating..." : "Generate Story"}
-      </button>
-    </div>
-
-    {/* STORY MODAL */}
-    {story && (
-      <div className="story-modal-overlay">
-        <div className="story-modal-card">
-
-          <button
-            className="story-modal-close"
-            onClick={() => {
-              setStory("");
-              setCurrentStoryId(null);
-            }}
-          >
-            ✕
-          </button>
-
-          <div className="story-modal-header">
-            <h2>📖 Story</h2>
-
-            <select
-              value={language}
-              onChange={(e) => handleLanguageChange(e.target.value)}
-            >
-              <option>English</option>
-              <option>Hindi</option>
-              <option>Marathi</option>
-              <option>Gujarati</option>
-              <option>Tamil</option>
-              <option>Telugu</option>
-              <option>Bengali</option>
-              <option>Punjabi</option>
-              <option>Hinglish</option>
-            </select>
-          </div>
-
-          <div className="story-modal-content">
-            {story}
-          </div>
-
-          <div className="story-audio-section">
-            {!audioUrl ? (
-              <button
-                className="listen-btn"
-                onClick={generateAudio}
-                disabled={audioLoading}
-              >
-                {audioLoading ? "⏳ Generating Audio..." : "🎧 Listen in Human Voice"}
-              </button>
-            ) : (
-              <audio controls autoPlay className="audio-player">
-                <source src={audioUrl} type="audio/mpeg" />
-              </audio>
-            )}
-          </div>
+          <select value={emotion} onChange={(e) => setEmotion(e.target.value)}>
+            <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
+            <option value="funny">Funny</option>
+          </select>
 
         </div>
-      </div>
-    )}
-
-    {/* LIBRARY PREVIEW */}
-    <div className="library-section">
-
-      <div className="library-header-center">
-        <h2>📚 Story Library 📚</h2>
-        <p>Explore curated stories crafted with AI.</p>
-      </div>
-
-      <div className="library-grid">
-        {libraryPreview.map(item => (
-          <div
-            key={item.id}
-            className="library-card"
-            onClick={() => openLibraryStory(item)}
+        <div className="length-buttons">
+          <button
+            className={length === "short" ? "active" : ""}
+            onClick={() => setLength("short")}
           >
-            <h3>{item.title}</h3>
-            <p>{item.category}</p>
-          </div>
-        ))}
+            Short
+          </button>
+
+          <button
+            className={length === "medium" ? "active" : ""}
+            onClick={() => setLength("medium")}
+          >
+            Medium
+          </button>
+
+          <button
+            className={length === "long" ? "active" : ""}
+            onClick={() => setLength("long")}
+          >
+            Long
+          </button>
+        </div>
+
+        <button className="generate-btn" onClick={handleGenerate}>
+          {loading ? "Generating..." : "Generate Story"}
+        </button>
       </div>
 
-      <div className="library-footer">
-        <Link to="/library" className="explore-btn-big">
-          📚 Explore Full Collection →
-        </Link>
+      {/* STORY MODAL */}
+      {story && (
+        <div className="story-modal-overlay">
+          <div className="story-modal-card">
+
+            <button
+              className="story-modal-close"
+              onClick={() => {
+                setStory("");
+                setCurrentStoryId(null);
+              }}
+            >
+              ✕
+            </button>
+
+            <div className="story-modal-header">
+              <h2>📖 Story</h2>
+
+              <select
+                value={language}
+                onChange={(e) => handleLanguageChange(e.target.value)}
+              >
+                <option>English</option>
+                <option>Hindi</option>
+                <option>Marathi</option>
+                <option>Gujarati</option>
+                <option>Tamil</option>
+                <option>Telugu</option>
+                <option>Bengali</option>
+                <option>Punjabi</option>
+                <option>Hinglish</option>
+              </select>
+            </div>
+
+            <div className="story-modal-content">
+              {story}
+            </div>
+
+            <div className="story-audio-section">
+              {!audioUrl ? (
+                <button
+                  className="listen-btn"
+                  onClick={generateAudio}
+                  disabled={audioLoading}
+                >
+                  {audioLoading ? "⏳ Generating Audio..." : "🎧 Listen in Human Voice"}
+                </button>
+              ) : (
+                <audio key={audioUrl} controls autoPlay className="audio-player">
+                  <source src={audioUrl} type="audio/mpeg" />
+                </audio>
+              )}
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* LIBRARY PREVIEW */}
+      <div className="library-section">
+
+        <div className="library-header-center">
+          <h2>📚 Story Library 📚</h2>
+          <p>Explore curated stories crafted with AI.</p>
+        </div>
+
+        <div className="library-grid">
+          {libraryPreview.map(item => (
+            <div
+              key={item.id}
+              className="library-card"
+              onClick={() => openLibraryStory(item)}
+            >
+              <h3>{item.title}</h3>
+              <p>{item.category}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="library-footer">
+          <Link to="/library" className="explore-btn-big">
+            📚 Explore Full Collection →
+          </Link>
+        </div>
+
       </div>
 
     </div>
-
-  </div>
-);
+  );
 };
 
 export default StoryGenerator;

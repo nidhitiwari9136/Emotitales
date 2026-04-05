@@ -17,6 +17,7 @@ function Navbar() {
     } catch {}
     localStorage.removeItem("user");
     navigate("/login");
+    window.location.reload(); 
   };
 
   return (

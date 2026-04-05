@@ -74,6 +74,12 @@ body {
   color: transparent;
 }
 
+.summary-card h2 .emoji {
+  background: none;
+  background-clip: text;
+  color: initial;   /* 🔥 original emoji color */
+}
+
 .subtitle {
   text-align: center;
   opacity: 0.7;

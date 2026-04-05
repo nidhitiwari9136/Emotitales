@@ -15,18 +15,19 @@ const ProtectedRoute = ({ children }) => {
 };
 
 // --- YE COMPONENT NAVBAR KO HIDE KAREGA ---
-const NavbarWrapper = () => {
-  const location = useLocation();
-  // Agar path '/login' hai toh kuch return mat karo
-  if (location.pathname === "/login") return null;
-  return <Navbar />;
-};
+// const NavbarWrapper = () => {
+//   const location = useLocation();
+
+//   if (location.pathname.startsWith("/login")) return null;
+//   console.log("Current Path:", location.pathname);
+//   return <Navbar />;
+// };
 
 function App() {
   return (
     <Router>
       {/* Navbar ab sirf login ke bahar dikhega */}
-      <NavbarWrapper />
+      {/* <NavbarWrapper /> */}
 
       <Routes>
         <Route path="/login" element={<Auth />} />
@@ -35,6 +36,7 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
+              <Navbar />
               <Home />
             </ProtectedRoute>
           }

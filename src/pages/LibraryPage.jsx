@@ -8,9 +8,12 @@ const API_URL = "http://127.0.0.1:8000/api";
 const LibraryPage = () => {
 
   const [stories, setStories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedStory, setSelectedStory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [audioLoading, setAudioLoading] = useState(false);
 
   // ===========================
   // FETCH LIBRARY STORIES
@@ -19,6 +22,10 @@ const LibraryPage = () => {
   useEffect(() => {
     fetchLibrary();
   }, []);
+
+  useEffect(() => {
+    setAudioUrl("");
+  }, [selectedStory, selectedLanguage]);
 
   const fetchLibrary = async () => {
     try {
@@ -92,20 +99,36 @@ const LibraryPage = () => {
     if (!selectedStory) return;
 
     try {
-      const res = await axios.post(
-        `${API_URL}/audio/`,
-        {
-          story: selectedStory.story
-        }
-      );
+      setAudioLoading(true);
+      setAudioUrl("");
 
-      const audio = new Audio(res.data.audio);
-      audio.play();
+      const res = await axios.post(`${API_URL}/audio/`, {
+        story: selectedStory.story
+      });
+
+      let audioPath = res.data.audio;
+
+      if (!audioPath.startsWith("http")) {
+        audioPath = "http://127.0.0.1:8000" + audioPath;
+      }
+
+      const fullUrl = audioPath + "?t=" + Date.now();
+
+      setAudioUrl(fullUrl);
+
+
+      setAudioUrl(fullUrl);
 
     } catch (error) {
       console.error("Audio generation error:", error);
+    } finally {
+      setAudioLoading(false);
     }
   };
+
+  const filteredStories = stories.filter((story) =>
+    story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // ===========================
   // UI
@@ -114,16 +137,37 @@ const LibraryPage = () => {
   return (
     <div className="library-container">
 
+
       <div className="library-header">
-        <h1>📚 EmotiTales Library 📚</h1>
-        <p>Explore 70+ Moral, Mythology & More Stories</p>
+
+        <div className="header-row">
+          <input
+            type="text"
+            placeholder="🔍 Search stories..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <h1>📚 EmotiTales Library 📚</h1>
+        </div>
+
+        <p className="simple-text">
+          <span>Explore</span>
+          <span>70+</span>
+          <span>Moral,</span>
+          <span>Mythology</span>
+          <span>&</span>
+          <span>More</span>
+          <span>Stories</span></p>
+
       </div>
 
       {loading ? (
         <div className="loading">Loading stories...</div>
       ) : (
         <LibraryGrid
-          stories={stories}
+          stories={filteredStories}
           onRead={handleReadStory}
         />
       )}
@@ -173,9 +217,16 @@ const LibraryPage = () => {
               className="read-btn"
               style={{ marginBottom: "25px" }}
               onClick={handleGenerateAudio}
+              disabled={audioLoading}
             >
-              🔊 Listen 
+              {audioLoading ? "⏳ Generating Audio..." : "🔊 Listen"}
             </button>
+
+            {audioUrl && (
+              <audio key={audioUrl} controls autoPlay style={{ marginBottom: "20px" }}>
+                <source src={audioUrl} type="audio/mpeg" />
+              </audio>
+            )}
 
             <p>{selectedStory.story}</p>
 
