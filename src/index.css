@@ -8,9 +8,9 @@ body {
   
   font-family: "NotoSansCustom";
   src: url("./assets/fonts/NotoSans-Regular.ttf") format("truetype");
-  background: #0b0b0b;
+  background: transparent;;
   color: #ffffff;
-  padding-top: 50px;
+  /* padding-top: 50px; */
 }
 
 :root {

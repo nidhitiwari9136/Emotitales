@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LibraryGrid from "../components/LibraryGrid";
+import Navbar from "../components/Navbar";
 import "../components/Library.css";
 
 const API_URL = "http://127.0.0.1:8000/api";
@@ -134,108 +135,116 @@ const LibraryPage = () => {
   // UI
   // ===========================
 
-  return (
+return (
+  <>
+    <Navbar />
+
     <div className="library-container">
 
 
-      <div className="library-header">
+        <div className="library-header">
 
-        <div className="header-row">
-          <input
-            type="text"
-            placeholder="🔍 Search stories..."
-            className="search-input"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <div className="header-row">
+            <input
+              type="text"
+              placeholder="🔍 Search stories..."
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
-          <h1>📚 EmotiTales Library 📚</h1>
+            <h1>📚 EmotiTales Library 📚</h1>
+          </div>
+
+          <p className="simple-text">
+            <span>Explore</span>
+            <span>70+</span>
+            <span>Moral,</span>
+            <span>Mythology</span>
+            <span>&</span>
+            <span>More</span>
+            <span>Stories</span></p>
+
         </div>
 
-        <p className="simple-text">
-          <span>Explore</span>
-          <span>70+</span>
-          <span>Moral,</span>
-          <span>Mythology</span>
-          <span>&</span>
-          <span>More</span>
-          <span>Stories</span></p>
+        {loading ? (
+          <div className="loading">Loading stories...</div>
+        ) : (
+          <LibraryGrid
+            stories={filteredStories}
+            onRead={handleReadStory}
+          />
+        )}
+
+        {/* ================= MODAL ================= */}
+
+        {selectedStory && (
+          <div className="story-modal">
+
+            <div className="modal-content">
+
+              <button
+                className="close-btn"
+                onClick={() => setSelectedStory(null)}
+              >
+                ✖
+              </button>
+
+              <h2>{selectedStory.title}</h2>
+
+              {/* Language Selector */}
+              <div style={{ marginBottom: "20px" }}>
+                <label style={{ marginRight: "10px" }}>
+                  🌍 Language:
+                </label>
+
+                <select
+                  value={selectedLanguage}
+                  onChange={(e) =>
+                    handleLanguageChange(e.target.value)
+                  }
+                >
+                  <option>English</option>
+                  <option>Hindi</option>
+                  <option>Marathi</option>
+                  <option>Gujarati</option>
+                  <option>Tamil</option>
+                  <option>Telugu</option>
+                  <option>Bengali</option>
+                  <option>Punjabi</option>
+                  <option>Hinglish</option>
+                </select>
+              </div>
+
+              {/* Audio Button */}
+              <button
+                className="read-btn"
+                style={{ marginBottom: "25px" }}
+                onClick={handleGenerateAudio}
+                disabled={audioLoading}
+              >
+                {audioLoading ? "⏳ Generating Audio..." : "🔊 Listen"}
+              </button>
+
+              {audioUrl && (
+                <audio key={audioUrl} controls autoPlay style={{ marginBottom: "20px" }}>
+                  <source src={audioUrl} type="audio/mpeg" />
+                </audio>
+              )}
+
+              <p>{selectedStory.story}</p>
+
+            </div>
+          </div>
+          
+
+        )}
 
       </div>
-
-      {loading ? (
-        <div className="loading">Loading stories...</div>
-      ) : (
-        <LibraryGrid
-          stories={filteredStories}
-          onRead={handleReadStory}
-        />
-      )}
-
-      {/* ================= MODAL ================= */}
-
-      {selectedStory && (
-        <div className="story-modal">
-
-          <div className="modal-content">
-
-            <button
-              className="close-btn"
-              onClick={() => setSelectedStory(null)}
-            >
-              ✖
-            </button>
-
-            <h2>{selectedStory.title}</h2>
-
-            {/* Language Selector */}
-            <div style={{ marginBottom: "20px" }}>
-              <label style={{ marginRight: "10px" }}>
-                🌍 Language:
-              </label>
-
-              <select
-                value={selectedLanguage}
-                onChange={(e) =>
-                  handleLanguageChange(e.target.value)
-                }
-              >
-                <option>English</option>
-                <option>Hindi</option>
-                <option>Marathi</option>
-                <option>Gujarati</option>
-                <option>Tamil</option>
-                <option>Telugu</option>
-                <option>Bengali</option>
-                <option>Punjabi</option>
-                <option>Hinglish</option>
-              </select>
-            </div>
-
-            {/* Audio Button */}
-            <button
-              className="read-btn"
-              style={{ marginBottom: "25px" }}
-              onClick={handleGenerateAudio}
-              disabled={audioLoading}
-            >
-              {audioLoading ? "⏳ Generating Audio..." : "🔊 Listen"}
-            </button>
-
-            {audioUrl && (
-              <audio key={audioUrl} controls autoPlay style={{ marginBottom: "20px" }}>
-                <source src={audioUrl} type="audio/mpeg" />
-              </audio>
-            )}
-
-            <p>{selectedStory.story}</p>
-
-          </div>
-        </div>
-      )}
-
-    </div>
-  );
+      </>
+      );
+      
+   
 };
 
-export default LibraryPage;
+      export default LibraryPage;

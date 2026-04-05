@@ -4,102 +4,94 @@
 
 .library-container {
   min-height: 100vh;
-  padding: 70px 60px;
+  padding: 110px 60px;
   background: radial-gradient(circle at top, #1e293b, #020617 60%);
   color: #f8fafc;
   font-family: "Times New Roman", Times, serif; 
 }
 
-/* ========================================
-   HEADER
-======================================== */
 
 .library-header {
-  text-align: left;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
+  padding: 0 15px;
 }
 
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  gap: 15px;
+}
+
+/* ========================= */
+/* SEARCH INPUT */
+/* ========================= */
+
 .search-input {
-  margin-top: 25px;
-  padding: 14px 18px;
-  width: 320px;
-  max-width: 90%;
-  border-radius: 14px;
+  padding: 16px 18px;
+  width: 100%;
+  max-width: 260px;
+  left:0;
+  border-radius: 12px;
   border: none;
   outline: none;
-  font-size: 1rem;
-  background: rgba(255,255,255,0.08);
+  font-size: 0.95rem;
   color: white;
-  backdrop-filter: blur(10px);
-  transition: 0.3s ease;
 
-  margin: 20px 0;
-  display: inline-block;     /* 🔥 main fix */
-  vertical-align: middle;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+
+  transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: rgba(255,255,255,0.5);
 }
 
 .search-input:focus {
-  transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.6);
+  transform: scale(1.03);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
 }
+
+/* ========================= */
+/* TITLE */
+/* ========================= */
 
 .library-header h1 {
-  font-size: 2.8rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 800;
-  background: linear-gradient(90deg, #a78bfa, #6366f1);
+  color: ffffff;
   text-align: center;
-  /* Pehle background clip karo */
-  background-clip: text; 
-  -webkit-background-clip: text;
-  display: table;        /* 🔥 magic */
-  margin: 0 auto;
-  
- 
-  
-  display: inline-block; /* Kabhi-kabhi block element par clip kaam nahi karta */
+  flex: 1;
 }
 
-.library-header .header-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;   /* center base */
-  position: relative;  
-  opacity: 0.7;
-  margin-top: 10px;
-  font-size: 1rem;      /* IMPORTANT */
-} 
-.library-header .header-row .search-input {
-  position: absolute;
-  left: 0;          /* 🔥 left fix */
-  
-  padding: 14px 18px;
-  width: 320px;
-  border-radius: 14px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-
-  background: rgba(255,255,255,0.08);
-  color: white;
-  backdrop-filter: blur(10px);
-}
+/* ========================= */
+/* SUB TEXT */
+/* ========================= */
 
 .simple-text {
-  margin-top: 15px;
-  font-size: 1.8rem;
+  margin-top: 10px;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
   text-align: center;
-  
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 1.4;
 }
+
+/* ========================= */
+/* ANIMATION */
+/* ========================= */
 
 .simple-text span {
   opacity: 0;
-  margin: 0 6px;
   display: inline-block;
+  margin: 0 4px;
   animation: slideRight 0.5s ease forwards;
 }
 
-/* delay same */
+/* delay */
 .simple-text span:nth-child(1) { animation-delay: 0.2s; }
 .simple-text span:nth-child(2) { animation-delay: 0.4s; }
 .simple-text span:nth-child(3) { animation-delay: 0.6s; }
@@ -108,16 +100,46 @@
 .simple-text span:nth-child(6) { animation-delay: 1.2s; }
 .simple-text span:nth-child(7) { animation-delay: 1.4s; }
 
-/* 🔥 LEFT → RIGHT animation */
+/* animation keyframe */
 @keyframes slideRight {
   from {
     opacity: 0;
-    transform: translateX(-20px); /* left se aaye */
+    transform: translateX(-15px);
   }
   to {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* ========================= */
+/* MOBILE RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+  .header-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .library-header h1 {
+    text-align: center;
+  }
+
+}
+
+/* ========================= */
+/* OPTIONAL GLOW EFFECT */
+/* ========================= */
+
+.search-input {
+  box-shadow: 0 0 15px rgba(167, 139, 250, 0.1);
 }
 /* ========================================
    GRID LAYOUT
